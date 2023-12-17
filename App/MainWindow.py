@@ -54,7 +54,6 @@ class MainWindow(QMainWindow):
         df = pd.DataFrame(data)
         return df
 
-    
     def displayDataInfo(self):
         """Retrieves data from a QTableWidget, converts it to a pandas DataFrame, and displays
             the information summary of the DataFrame in a QTextEdit widget.
