@@ -9,17 +9,16 @@ from sklearn.feature_selection import SelectKBest, chi2, f_classif, f_regression
         
 def selectFeatures(labels, features, k, stat_func = "chi2"):
     """
-    
 
     Parameters
     ----------
-    labels : TYPE
+    *labels*: TYPE
         DESCRIPTION.
-    features : TYPE
+    *features*: TYPE
         DESCRIPTION.
-    k : TYPE
+    *k*: TYPE
         DESCRIPTION.
-    stat_func : TYPE, optional
+    *stat_func*: TYPE, optional
         DESCRIPTION. The default is "chi2".
 
     Returns
