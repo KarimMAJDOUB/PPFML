@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Dec 14 18:25:57 2023
+Created on Fri Dec 22 15:28:48 2023
 
-@author: Larkem Oussama
+@author: Larkem Oussama 
 """
-
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
@@ -18,41 +17,24 @@ import matplotlib.pyplot as plt
 df = pd.read_csv('Final_Data.csv')
 data = df.drop(['ON_STREAM_HRS'], axis=1)
 
-def split_train_test_data_app(data):
-    print("Choose the test size:")
-    print("1. 20% (0.2)")
-    print("2. 30% (0.3)")
-    test_size_choice = input("Enter your choice (1/2): ")
-
-    if test_size_choice == '1':
-        test_size = 0.2
-    elif test_size_choice == '2':
-        test_size = 0.3
-    else:
-        print("Invalid choice. Please select either 1 or 2.")
-        return
+def get_features_labels(data):
     target_columns = ['BORE_OIL_VOL', 'BORE_GAS_VOL', 'BORE_WAT_VOL']
-    print("Choose the target column:")
-    print("1. BORE_OIL_VOL")
-    print("2. BORE_GAS_VOL")
-    print("3. BORE_WAT_VOL")
-    target_column_choice = input("Enter your choice (1/3): ")
-
-    if target_column_choice == '1':
-        target_column = 'BORE_OIL_VOL'
-    elif target_column_choice == '2':
-        target_column = 'BORE_GAS_VOL'
-    elif target_column_choice == '3':
-        target_column = 'BORE_WAT_VOL'
-    else:
-        print("Invalid choice. Please select either 1, 2, or 3.")
-        return
 
     X = data.drop(target_columns, axis=1)
-    y = data[target_column]
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
-    
-    return X_train, X_test, y_train, y_test
+    Y1 = data['BORE_OIL_VOL']
+    Y2 = data['BORE_GAS_VOL']
+    Y3 = data['BORE_WAT_VOL']
+
+    return X, Y1, Y2, Y3
+
+
+def split_train_test(X, Y1, Y2, Y3, test_size=0.3):
+    X_train, X_test, y1_train, y1_test = train_test_split(X, Y1, test_size=test_size, random_state=42)
+    y2_train, y2_test = train_test_split(Y2, test_size=test_size, random_state=42)
+    y3_train, y3_test = train_test_split(Y3, test_size=test_size, random_state=42)
+
+    return X_train, X_test, y1_train, y1_test, y2_train, y2_test, y3_train, y3_test
+
 
 def Train_and_evaluate(model_name, X_train, X_test, y_train, y_test, index):
     models = {
